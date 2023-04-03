@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+    HOME  <a href="{% url "create_content_plan" %}" class="button" style="text-decoration: none; color: blueviolet">Создать контент план до конца месяца</a>
+    <a href="{% url "create_article" %}" class="button" style="text-decoration: none; color: forestgreen">Создать статью на сегодня</a>
+
+    {% for article in articles %}
+        <ul>
+          <li>
+            <h2><a href="#" style="text-decoration: none; color: darkslategray">{{ article.topic.title }}</a></h2>
+            <p>{{ article.body }}</p>
+          </li>
+        </ul>
+    {% endfor %}
+
+</body>
+</html>
