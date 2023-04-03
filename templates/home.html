@@ -3,33 +3,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
+    <title>Статьи</title>
+
+    <link href="{% sass_src 'css/styles.scss' %}" rel="stylesheet" type="text/css" />
     <link href="{% sass_src 'css/home/styles.scss' %}" rel="stylesheet" type="text/css" />
   </head>
+
   <body>
-    <a href="{% url 'create_content_plan' %}" class="button" style="text-decoration: none; color: blueviolet">
-      Создать контент план до конца месяца
-    </a>
-
-    <a href="{% url 'create_article' %}" class="button" style="text-decoration: none; color: forestgreen">
-      Создать статью на сегодня
-    </a>
-
-    <ul>
+    <div class="articles">
       {% for article in articles %}
-      <li>
-        {% if article.picture %}
-        <img src="{{ article.picture.url }}" alt="{{ article.topic }}" />
-        {% endif %}
+      <a href="{% url 'article_detail' article.pk %}" class="article">
+        <div class="image">
+          {% if article.picture %}
+          <img src="{{ article.picture.url }}" alt="{{ article.topic }}" />
+          {% endif %}
+        </div>
 
-        <h2>
-          <a href="{% url 'article_detail' article.pk %}" style="text-decoration: none; color: darkslategray">
-            {{ article.topic }}
-          </a>
-        </h2>
-      </li>
+        <div class="body">
+          <h2>{{ article.topic }}</h2>
+
+          <span>{{ article.date }}</span>
+        </div>
+      </a>
       {% endfor %}
-    </ul>
+    </div>
   </body>
 </html>

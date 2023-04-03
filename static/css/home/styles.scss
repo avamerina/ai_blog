@@ -1,2 +1,72 @@
-body {
+.articles {
+  display: grid;
+  grid-gap: 15px;
+  max-width: 1400px;
+  padding: 100px 20px;
+  margin: 0 auto;
+
+  .article {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .image {
+      img {
+        max-width: 100%;
+        object-fit: cover;
+        transition: transform 0.2s;
+        transform: scale(1.05);
+      }
+    }
+
+    .body {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      background-color: rgba(#000, 0.5);
+    }
+
+    &:hover {
+      .image {
+        img {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    @media screen and (min-width: 1366px) {
+      .body {
+        top: 0;
+        padding: 20px;
+
+        h2 {
+          font-size: 26px;
+        }
+      }
+    }
+
+    @media screen and (max-width: 1365px) {
+      .body {
+        padding: 10px;
+
+        h2 {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1366px) {
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+  }
+
+  @media screen and (max-width: 1365px) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 }

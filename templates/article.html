@@ -3,20 +3,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
+    <title>{{ article.topic }}</title>
+
+    <link href="{% sass_src 'css/styles.scss' %}" rel="stylesheet" type="text/css" />
     <link href="{% sass_src 'css/article/styles.scss' %}" rel="stylesheet" type="text/css" />
   </head>
 
   <body>
-    <h2>
-      <a href="#" style="text-decoration: none; color: darkslategray">{{ article.topic }}</a>
-    </h2>
+    <div class="article">
+      <div class="image">
+        {% if article.picture %}
+        <img src="{{ article.picture.url }}" alt="{{ article.topic }}" />
+        {% endif %}
 
-    <p>{{ article.body }}</p>
+        <div class="title">
+          <h2>{{ article.topic }}</h2>
 
-    {% if article.picture %}
-    <img src="{{ article.picture.url }}" alt="{{ article.topic }}" />
-    {% endif %}
+          <span>{{ article.date }}</span>
+        </div>
+      </div>
+
+      <div class="body">{{ article.body }}</div>
+    </div>
   </body>
 </html>
