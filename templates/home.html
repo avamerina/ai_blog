@@ -1,21 +1,35 @@
+{% load sass_tags %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Home</title>
-</head>
-<body>
 
-    HOME  <a href="{% url "create_content_plan" %}" class="button" style="text-decoration: none; color: blueviolet">Создать контент план до конца месяца</a>
-    <a href="{% url "create_article" %}" class="button" style="text-decoration: none; color: forestgreen">Создать статью на сегодня</a>
+    <link href="{% sass_src 'css/home/styles.scss' %}" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <a href="{% url 'create_content_plan' %}" class="button" style="text-decoration: none; color: blueviolet">
+      Создать контент план до конца месяца
+    </a>
 
-    {% for article in articles %}
-        <ul>
-          <li>
-            <h2><a href="{% url "article_detail" article.pk %}" style="text-decoration: none; color: darkslategray">{{ article.topic.title }}</a></h2>
-          </li>
-        </ul>
-    {% endfor %}
+    <a href="{% url 'create_article' %}" class="button" style="text-decoration: none; color: forestgreen">
+      Создать статью на сегодня
+    </a>
 
-</body>
+    <ul>
+      {% for article in articles %}
+      <li>
+        {% if article.picture %}
+        <img src="{{ article.picture.url }}" alt="{{ article.topic }}" />
+        {% endif %}
+
+        <h2>
+          <a href="{% url 'article_detail' article.pk %}" style="text-decoration: none; color: darkslategray">
+            {{ article.topic }}
+          </a>
+        </h2>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
 </html>
