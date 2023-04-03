@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+        <h2><a href="#" style="text-decoration: none; color: darkslategray">{{ article.topic }}</a></h2>
+        <p>{{ article.body }}</p>
+            {% if article.picture %}
+        <img src="{{ article.picture.url }}" alt="{{ article.topic }}">
+    {% endif %}
+
+
+</body>
+</html>

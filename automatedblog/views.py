@@ -2,7 +2,7 @@ import datetime
 
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from automatedblog import generators, services, helpers
 from automatedblog.models import Topic
 
@@ -12,6 +12,13 @@ class TopicListView(ListView):
     template_name = 'home.html'
     model = Topic
     context_object_name = 'articles'
+
+
+class ArticleDetailView(DetailView):
+    """Отображение детальной страницы статьи"""
+    template_name = 'article.html'
+    model = Topic
+    context_object_name = 'article'
 
 
 class GenerateContent:
@@ -49,12 +56,3 @@ class GenerateContent:
         except Exception as e:
             print(e)
             return HttpResponse(e)
-
-
-
-
-
-
-
-
-

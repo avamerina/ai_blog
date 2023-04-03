@@ -12,8 +12,7 @@
     {% for article in articles %}
         <ul>
           <li>
-            <h2><a href="#" style="text-decoration: none; color: darkslategray">{{ article.topic.title }}</a></h2>
-            <p>{{ article.body }}</p>
+            <h2><a href="{% url "article_detail" article.pk %}" style="text-decoration: none; color: darkslategray">{{ article.topic.title }}</a></h2>
           </li>
         </ul>
     {% endfor %}
