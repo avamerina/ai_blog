@@ -1,11 +1,13 @@
 import datetime
 
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
 from automatedblog import generators, services, helpers
 from automatedblog.models import Topic
 
+def sass_page_handler(request):
+    return render(request, 'index.html')
 
 class TopicListView(ListView):
     """Отображение списка статей на месяц"""
