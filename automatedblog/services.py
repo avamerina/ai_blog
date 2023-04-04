@@ -47,3 +47,9 @@ def save_article_to_db(topic: Topic, generated_article: str) -> True | False:
 def get_article_for_today(today: str) -> str:
     """Get article corresponding to today's date"""
     return Topic.objects.filter(date=today).first().body
+
+
+def get_topics_with_no_body_yet() -> List[Topic]:
+    """Get list of recently generated topics"""
+    return list(Topic.objects.all().filter(body=''))
+

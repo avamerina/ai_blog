@@ -6,8 +6,10 @@ from django.views.generic import ListView, DetailView
 from automatedblog import generators, services, helpers
 from automatedblog.models import Topic
 
+
 def sass_page_handler(request):
     return render(request, 'index.html')
+
 
 class TopicListView(ListView):
     """Отображение списка статей на месяц"""
@@ -58,3 +60,17 @@ class GenerateContent:
         except Exception as e:
             print(e)
             return HttpResponse(e)
+
+    @staticmethod
+    def create_articles_by_new_content_plan(request, *args, **kwargs):
+        new_topics = services.get_topics_with_no_body_yet()
+        print(len(new_topics))
+        for topic in new_topics:
+            generated_article = generators.generate_daily_article(topic)
+            try:
+                services.save_article_to_db(topic, generated_article)
+            except Exception as e:
+                print(e)
+        return redirect('home')
+
+

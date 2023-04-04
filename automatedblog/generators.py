@@ -24,7 +24,7 @@ def generate_full_content_plan() -> str:
 
 def generate_daily_article(topic: Topic) -> str:
     print('тема для генерации: ', topic.topic)
-    prompt = f'Напиши подробную статью для блога на тему "{topic.topic}" длиной не менее 3000 символов'
+    prompt = f'Напиши подробную статью для блога на тему "{topic.topic}" длиной не менее 5000 символов c html-разметкой'
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
@@ -33,7 +33,7 @@ def generate_daily_article(topic: Topic) -> str:
         stop=None,
         temperature=0.5,
     )
-    article = response.choices[0].text.strip()
+    article = response.choices[0].text.strip('.')
 
     return article
 
