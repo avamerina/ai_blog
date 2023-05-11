@@ -1,3 +1,4 @@
+from typing import Dict
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
@@ -16,7 +17,7 @@ class TopicListView(ListView):
     model = Topic
     context_object_name = 'articles'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> Dict:
         return {'articles': services.get_topics_till_today()}
 
 

@@ -1,9 +1,11 @@
+import os
+
 import openai
 from automatedblog import helpers
 from automatedblog.models import Topic
 
 
-openai.api_key = "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"
+openai.api_key = os.environ.get('OPENAI_KEY')
 
 
 def generate_full_content_plan() -> str:
