@@ -1,4 +1,7 @@
 import datetime
+import os
+import urllib.request
+from django.conf import settings
 from dateutil.relativedelta import relativedelta
 import re
 from typing import List, Tuple
@@ -21,3 +24,13 @@ def parse_content_plan(content_plan_full_text: str) -> List[Tuple]:
     matches = re.findall(pattern, content_plan_full_text)
     return matches
 
+
+def download_image_to_local_media_storage(url: str) -> str | None:
+    """Download Image by url to local media storage"""
+    try:
+        file_name = os.path.basename(url)
+        file_path = os.path.join(settings.MEDIA_ROOT, file_name)
+        urllib.request.urlretrieve(url, file_path)
+        return os.path.relpath(file_path, settings.MEDIA_ROOT)
+    except Exception as e:
+        print(e)
