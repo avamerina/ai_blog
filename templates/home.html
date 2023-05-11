@@ -15,10 +15,10 @@
   <body>
     <div class="articles">
       {% for article in articles %}
-      <a href="{% url 'article_detail' article.pk %}" class="article">
+      <a id="article-image" href="{% url 'article_detail' article.pk %}" class="article">
         <div class="image">
-          {% if article.picture %}
-          <img src="{{ article.picture.url }}" alt="{{ article.topic }}" />
+          {% if article.picture  %}
+                  <img src="{{ article.picture.url }}" alt="{{ article.topic }}" />
           {% endif %}
         </div>
 
@@ -30,5 +30,17 @@
       </a>
       {% endfor %}
     </div>
+
+{#    <script>#}
+{#   function changeImageSrc() {#}
+{#       const imgs = document.querySelectorAll(".image img");#}
+{#       imgs.forEach(img => {#}
+{#           console.log(img)#}
+{#       })#}
+{#   }#}
+{##}
+{#   changeImageSrc()#}
+{#  </script>#}
+
   </body>
 </html>
