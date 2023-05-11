@@ -21,6 +21,7 @@ multidict==6.0.4
 openai==0.27.2
 Pillow==9.5.0
 python-dateutil==2.8.2
+python-dotenv==1.0.0
 pytz==2023.3
 pytz-deprecation-shim==0.1.0.post0
 rcssmin==1.1.1

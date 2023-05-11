@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Dict
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -7,7 +8,7 @@ from automatedblog.models import Topic
 from automatedblog.exceptions import NoneTypeError
 
 
-def sass_page_handler(request):
+def sass_page_handler(request) -> HttpResponse:
     return render(request, 'index.html')
 
 
@@ -17,7 +18,7 @@ class TopicListView(ListView):
     model = Topic
     context_object_name = 'articles'
 
-    def get_context_data(self, *, object_list=None, **kwargs) -> Dict:
+    def get_context_data(self, *, object_list: list = None, **kwargs: Dict) -> Dict:
         return {'articles': services.get_topics_till_today()}
 
 
@@ -32,7 +33,7 @@ class GenerateContent:
     """Создание контента"""
 
     @staticmethod
-    def create_daily_article(date, *args, **kwargs) -> None | HttpResponse:
+    def create_daily_article(date: str, *args: list, **kwargs: Dict) -> None | HttpResponse:
         """Create one article for current date"""
         topic = services.get_topic_for_today(str(date))
         try:
@@ -50,8 +51,6 @@ class GenerateContent:
                 raise NoneTypeError('no content plan for today custom')
             print(e)
             return redirect('home')
-
-
 
 
 

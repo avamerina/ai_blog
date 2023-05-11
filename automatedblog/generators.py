@@ -1,5 +1,4 @@
 import os
-
 import openai
 from automatedblog import helpers
 from automatedblog.models import Topic
@@ -40,7 +39,7 @@ def generate_daily_article(topic: Topic) -> str:
     return article
 
 
-def generate_picture(topic: Topic) -> str:
+def generate_picture(topic: str) -> str:
     """Generate image"""
     result = openai.Image.create(
         prompt=f"Создай изображение в стиле реализм и документализм на тему {topic}",
@@ -51,7 +50,7 @@ def generate_picture(topic: Topic) -> str:
 
 
 def generate_new_extra_topic(old_title: str) -> str:
-    """Generate a new topic title"""
+    """Generate new topic title"""
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=f"Подбери новую тему для блога, чтобы она отличалась от '{old_title}'",
