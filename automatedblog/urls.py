@@ -1,5 +1,5 @@
 from django.urls import path
-from automatedblog.views import TopicListView, GenerateContent, ArticleDetailView
+from automatedblog.views import TopicListView, ArticleDetailView
 from automatedblog.job_updater import start
 
 urlpatterns = [
