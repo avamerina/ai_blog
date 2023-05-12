@@ -1,63 +1,64 @@
-.article {
-  max-width: 1400px;
-  margin: 0 auto;
+.page {
+  position: relative;
 
-  .image {
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      object-fit: cover;
-      transition: transform 0.2s;
-    }
-
-    .title {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      width: 100%;
-      padding: 20px;
-      color: #fff;
-      background-color: rgba(#000, 0.5);
-    }
-
-    &:hover {
-      img {
-        transform: scale(1.05);
-      }
-    }
-
-    @media screen and (min-width: 1366px) {
-      max-height: 400px;
-
-      .title {
-        h2 {
-          font-size: 26px;
-        }
-      }
-    }
-
-    @media screen and (max-width: 1365px) {
-      max-height: 80vh;
-
-      .title {
-        h2 {
-          font-size: 3.5vw;
-        }
-      }
-    }
-  }
-
-  @media screen and (min-width: 1366px) {
+  .article {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 50px 20px;
-  }
 
-  @media screen and (max-width: 1365px) {
-    padding: 20px;
+    .image {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.2s;
+      }
+
+      .title {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        width: 100%;
+        padding: 20px;
+        color: #fff;
+        background-color: rgba(#000, 0.5);
+      }
+
+      &:hover {
+        img {
+          transform: scale(1.05);
+        }
+      }
+
+      @media screen and (min-width: 1366px) {
+        max-height: 400px;
+
+        .title {
+          h1 {
+            font-size: 26px;
+          }
+        }
+      }
+
+      @media screen and (max-width: 1365px) {
+        max-height: 80vh;
+
+        .title {
+          h1 {
+            font-size: 3.5vw;
+          }
+        }
+      }
+    }
+
+    .body {
+      margin: 20px 0;
+    }
   }
 }
