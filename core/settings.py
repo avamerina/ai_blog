@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'automatedblog.apps.AutomatedblogConfig',
-    'sass_processor'
+    'sass_processor',
+    'apscheduler'
 ]
 
 MIDDLEWARE = [

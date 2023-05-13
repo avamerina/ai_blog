@@ -17,7 +17,7 @@ def main_script() -> None | HttpResponse:
     """Daily check up for beginning of the new month to generate content for new month"""
     try:
         today = datetime.today()
-        if today.day == 11:
+        if today.day == 1:
             try:
                 services.remove_out_of_plan_topics(services.check_if_any_topic_exists_for_this_month(today))
             except Exception as e:
