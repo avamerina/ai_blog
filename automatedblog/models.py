@@ -6,4 +6,4 @@ class Topic(models.Model):
     date = models.DateField()
     topic = models.CharField(max_length=255)
     body = models.TextField(default='')
-    picture = models.ImageField(upload_to='images/', blank=True, default='images/auto.jpg') 
+    picture = models.ImageField(upload_to='images/', blank=True, default='images/auto.png') 
