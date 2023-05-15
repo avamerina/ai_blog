@@ -1,5 +1,7 @@
 import logging
 from datetime import datetime
+import requests
+import openai
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from automatedblog import generators, services, helpers, views
@@ -32,6 +34,6 @@ def main_script() -> None | HttpResponse:
             views.GenerateContent.create_daily_article(date=today.strftime('%Y-%m-%d'))
             logger.error('Nonetype error while daily article generation in non first day of month condition: ', str(n), exc_info=True)
             return redirect('home')
-    except Exception as e:
+    except (Exception, openai.error.APIError, requests.exceptions.Timeout) as e:
         logger.error('In main script: ', str(e), exc_info=True)
         return redirect("home")

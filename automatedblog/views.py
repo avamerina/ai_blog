@@ -36,8 +36,11 @@ class GenerateContent:
     @staticmethod
     def create_daily_article(date: str, *args: list, **kwargs: Dict) -> None | HttpResponse:
         """Create one article for current date"""
-        topic = services.get_topic_for_today(str(date))
-        logger.info(f'Topic for today: {topic.topic}')
+        try:
+            topic = services.get_topic_for_today(str(date))
+            logger.info(f'Topic for today: {topic.topic}')
+        except AttributeError as a:
+            logger.error('No topic for today: ', str(a), exc_info=True)
         try:
             generated_article = generators.generate_daily_article(topic)
             generated_image_url = generators.generate_picture(topic.topic)
@@ -49,11 +52,9 @@ class GenerateContent:
                 logger.error('An error occurred while saving article and image: %s', str(e), exc_info=True)
                 return redirect('home')
         except AttributeError as e:
-            try:
-                if str(e).startswith("'NoneType'"):
-                    raise NoneTypeError('no content plan for today custom')
-            except NoneTypeError as n:
-                logger.error('Nonetype error daily article create method: ', str(n), exc_info=True)
+            if str(e).startswith("'NoneType'"):
+                logger.error('Nonetype error daily article create method: ', exc_info=True)
+                raise NoneTypeError('no content plan for today custom')
             return redirect('home')
 
 
