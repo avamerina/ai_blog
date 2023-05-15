@@ -1,9 +1,11 @@
+import logging
 from datetime import datetime
-
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from automatedblog import generators, services, helpers, views
 from automatedblog.exceptions import NoneTypeError
+
+logger = logging.getLogger(__name__)
 
 
 def content_plan_script() -> None:
@@ -21,14 +23,15 @@ def main_script() -> None | HttpResponse:
             try:
                 services.remove_out_of_plan_topics(services.check_if_any_topic_exists_for_this_month(today))
             except Exception as e:
-                print(e)
+                logger.error(f'Exception on first day of month condition', str(e), exc_info=True)
                 content_plan_script()
         try:
             views.GenerateContent.create_daily_article(date=today.strftime('%Y-%m-%d'))
         except NoneTypeError as n:
             content_plan_script()
             views.GenerateContent.create_daily_article(date=today.strftime('%Y-%m-%d'))
-            print(n)
+            logger.error('Nonetype error while daily article generation in non first day of month condition: ', str(n), exc_info=True)
             return redirect('home')
     except Exception as e:
+        logger.error('In main script: ', str(e), exc_info=True)
         return redirect("home")
