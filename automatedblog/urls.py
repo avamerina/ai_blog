@@ -1,6 +1,6 @@
 from django.urls import path
 from automatedblog.views import TopicListView, ArticleDetailView
-from automatedblog.job_updater import start
+from automatedblog.schedulerstart import start
 
 urlpatterns = [
     path('', TopicListView.as_view(), name='home'),

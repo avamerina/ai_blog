@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import Dict
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -6,7 +5,9 @@ from django.views.generic import ListView, DetailView
 from automatedblog import generators, services, helpers
 from automatedblog.models import Topic
 from automatedblog.exceptions import NoneTypeError
+import logging
 
+logger = logging.getLogger(__name__)
 
 def sass_page_handler(request) -> HttpResponse:
     return render(request, 'index.html')
@@ -36,6 +37,7 @@ class GenerateContent:
     def create_daily_article(date: str, *args: list, **kwargs: Dict) -> None | HttpResponse:
         """Create one article for current date"""
         topic = services.get_topic_for_today(str(date))
+        logger.info(f'Topic for today: {topic.topic}')
         try:
             generated_article = generators.generate_daily_article(topic)
             generated_image_url = generators.generate_picture(topic.topic)
@@ -44,12 +46,14 @@ class GenerateContent:
                 generated_image = helpers.download_image_to_local_media_storage(generated_image_url)
                 services.save_image_to_db(topic, generated_image)
             except Exception as e:
-                print(e)
+                logger.error('An error occurred while saving article and image: %s', str(e), exc_info=True)
                 return redirect('home')
         except AttributeError as e:
-            if str(e).startswith("'NoneType'"):
-                raise NoneTypeError('no content plan for today custom')
-            print(e)
+            try:
+                if str(e).startswith("'NoneType'"):
+                    raise NoneTypeError('no content plan for today custom')
+            except NoneTypeError as n:
+                logger.error('Nonetype error daily article create method: ', str(n), exc_info=True)
             return redirect('home')
 
 
