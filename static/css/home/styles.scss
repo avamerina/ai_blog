@@ -11,6 +11,7 @@
     .article {
       position: relative;
       display: inline-flex;
+      max-width: calc(1400px / 3);
       flex-direction: column;
       border-radius: 10px;
       overflow: hidden;
@@ -66,11 +67,11 @@
     }
 
     @media screen and (min-width: 1366px) {
-      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
     }
 
     @media screen and (max-width: 1365px) {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
   }
 }
