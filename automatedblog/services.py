@@ -44,7 +44,10 @@ def get_topic_for_today(today: str) -> Topic:
 def save_article_to_db(topic: Topic, generated_article: str) -> None:
     """Add article to Topic"""
     try:
-        topic.body = generated_article
+        topic.body = generated_article + \
+                     '\n\n\n' + \
+                     '<p>Оставьте заявку на сайте <a href="https://sailet.kz/">sailet.kz</a> ' \
+                     'для получения бесплатной консультации от экспертов в автоматизации!</p>'
         topic.save()
         logger.info(f'Article successfully saved to db: {topic.body[:-10]}')
     except Exception as e:
@@ -96,7 +99,3 @@ def save_prompt_to_db(prompt: str) -> None:
         Prompt.objects.create(body=prompt)
     except Exception as e:
         logger.error('An error occurred during saving prompt to db: %s', str(e), exc_info=True)
-
-
-
-
