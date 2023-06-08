@@ -1,11 +1,15 @@
 import logging
 from datetime import datetime
 from typing import Tuple, List
-from automatedblog.models import Topic
+from automatedblog.models import Topic, Prompt
 from automatedblog import generators
 from django.db.models import Q
 
 logger = logging.getLogger(__name__)
+
+
+def get_topic_by_id(pk: int) -> Topic:
+    return Topic.objects.get(pk=pk)
 
 
 def check_topic_if_does_exist(title: str) -> True | False:
@@ -85,4 +89,14 @@ def remove_out_of_plan_topics(topics: List[Topic]) -> None:
 
 def get_topics_with_blank_fields() -> List[Topic]:
     return Topic.objects.filter(Q(body='') | Q(picture='images/auto.png'))
+
+
+def save_prompt_to_db(prompt: str) -> None:
+    try:
+        Prompt.objects.create(body=prompt)
+    except Exception as e:
+        logger.error('An error occurred during saving prompt to db: %s', str(e), exc_info=True)
+
+
+
 

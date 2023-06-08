@@ -1,5 +1,5 @@
 from typing import Dict
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
 from automatedblog import generators, services, helpers
@@ -8,6 +8,7 @@ from automatedblog.exceptions import NoneTypeError
 import logging
 
 logger = logging.getLogger(__name__)
+
 
 def sass_page_handler(request) -> HttpResponse:
     return render(request, 'index.html')
@@ -20,7 +21,7 @@ class TopicListView(ListView):
     context_object_name = 'articles'
 
     def get_context_data(self, *, object_list: list = None, **kwargs: Dict) -> Dict:
-        return {'articles': services.get_topics_till_today()}
+        return {'articles': services.get_topics_till_today().order_by('-date')}
 
 
 class ArticleDetailView(DetailView):
@@ -57,24 +58,28 @@ class GenerateContent:
             return redirect('home')
 
     @staticmethod
-    def cover_blank_topic_fields(request, *args, **kwargs):
+    def cover_blank_topic_fields(request: HttpRequest, *args: list, **kwargs: Dict) -> None | HttpResponse:
         """Checks if there is any blank fields in Topic instances and covers them"""
         incomplete_objects = services.get_topics_with_blank_fields()
         for topic in incomplete_objects:
             if topic.body == '':
-                print(1)
-                generators.generate_daily_article(topic)
+                new_article = generators.generate_daily_article(topic)
+                services.save_article_to_db(topic, new_article)
             if topic.picture == 'images/auto.png':
-                print(3)
                 generated_image_url = generators.generate_picture(topic.topic)
                 generated_image = helpers.download_image_to_local_media_storage(generated_image_url)
                 services.save_image_to_db(topic, generated_image)
+        return redirect('home')
 
 
-
-
-
-
-
-
-
+    @staticmethod
+    def generate_article_manually(request: HttpRequest, *args: list, **kwargs: Dict) -> None | HttpResponse:
+        """Manual article generation"""
+        try:
+            topic_id = kwargs.get('pk')
+            topic = services.get_topic_by_id(topic_id)
+            new_article = generators.generate_daily_article(topic)
+            services.save_article_to_db(topic, new_article)
+            return redirect('article_detail', pk=topic_id)
+        except:
+            return redirect('home')

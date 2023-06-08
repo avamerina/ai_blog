@@ -7,3 +7,7 @@ class Topic(models.Model):
     topic = models.CharField(max_length=255)
     body = models.TextField(default='')
     picture = models.ImageField(upload_to='images/', blank=True, default='images/auto.png') 
+
+
+class Prompt(models.Model):
+    body = models.TextField(null=True)
